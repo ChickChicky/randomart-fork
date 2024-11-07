@@ -708,6 +708,16 @@ void optimize_expr(Node *expr)
         if (get_boolean(expr->as.iff.cond, &cond))
             *expr = cond ? *expr->as.iff.then : *expr->as.iff.elze;
     } break;
+    case NK_SQRT: {
+        optimize_expr(expr->as.unary);
+        if (get_number(expr->as.unary, &lhs))
+            *expr = node_number_inline(sqrtf(lhs));
+    } break;
+    case NK_SIGM: {
+        optimize_expr(expr->as.unary);
+        if (get_number(expr->as.unary, &lhs))
+            *expr = node_number_inline(tanhf(lhs));
+    } break;
     case COUNT_NK:
     default:
         UNREACHABLE("optimize_expr");
