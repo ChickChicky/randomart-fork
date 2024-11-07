@@ -17,6 +17,10 @@
 #include "threads.h"
 #endif
 
+#ifndef static_assert
+#define static_assert _Static_assert
+#endif
+
 #define WIDTH 800
 #define HEIGHT 800
 
